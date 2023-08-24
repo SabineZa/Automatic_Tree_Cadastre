@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+Images/
+output/
+discarded_functions.py
+test.d2
+csvfile2citygml.fmw.recover
+csvfile2citygml.log
+initial-setup.md
+*.las

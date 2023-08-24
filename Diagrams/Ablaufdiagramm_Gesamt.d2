@@ -1,0 +1,250 @@
+# d2 -t 0 Diagrams/Ablaufdiagramm_Gesamt.d2 Diagrams/Ablaufdiagramm_Gesamt.png
+
+p1: Punktwolke(n) (x, y, z, ...)
+p1.shape: hexagon
+# p1.style.fill: honeydew
+
+p2: "Punktwolkenarray [x, y, z]"
+p2.shape: hexagon
+#p2.style.fill: honeydew
+
+p3: "Punktwolke ohne Boden [x, y, z]"
+p3.shape: hexagon
+#p3.style.fill: honeydew
+
+p4: "Bodenpunktwolke [x, y, z]"
+p4.shape: hexagon
+#p4.style.fill: honeydew
+
+p4-2: "Bodenraster mit medialen Z-Werten"
+p4-2.shape: hexagon
+
+p5: "Punktwolke ohne Boden [x, y, z*]"
+p5.shape: hexagon
+#p5.style.fill: honeydew
+
+b2: Baumkataster in CityGML
+b2.shape: hexagon
+#b2.style.fill: honeydew
+
+Datenaufnahme -> p1 -> "Vorverarbeitung & Programmstart" -> p2 {
+  style {
+    stroke-width: 4
+  }
+}
+p2 -> Boden separieren -> p3 {
+  style {
+    stroke-width: 4
+  }
+}
+Boden separieren -> p4 -> Boden rastern -> p4-2 -> Einheitliches Höhenlevel <- p3 {
+  style {
+    stroke-width: 4
+  }
+}
+p4-2 -> "Baumparameter extrahieren".Transformation {
+  style {
+    stroke-width: 4
+  }
+}
+
+Einheitliches Höhenlevel -> p5 -> "Baumparameter extrahieren".r {
+  style {
+    stroke-width: 4
+  }
+}
+"Baumparameter extrahieren"."Endgültige Baumparameter" -> Konvertierung in CityGML -> b2 {
+  style {
+    stroke-width: 4
+  }
+}
+
+Datenaufnahme.style.font-size: 50
+"Vorverarbeitung & Programmstart".style.font-size: 50
+"Boden separieren".style.font-size: 50
+"Boden rastern".style.font-size: 50
+"Einheitliches Höhenlevel".style.font-size: 50
+"Baumparameter extrahieren".style.font-size: 50
+"Konvertierung in CityGML".style.font-size: 50
+
+p1.style.font-size: 50
+p2.style.font-size: 50
+p3.style.font-size: 50
+p4.style.font-size: 50
+p4-2.style.font-size: 50
+p5.style.font-size: 50
+b2.style.font-size: 50
+
+"Baumparameter extrahieren": {
+    style: {
+        font-size: 50
+        bold: true
+    }
+#     p5: "Punktwolke ohne Boden [x, y, z*]"
+# p5.shape: hexagon
+# p5.style.font-size: 50
+
+r: "Reduzierung der Punktwolke in den 2D-Raum"
+r.style.font-size: 50
+
+b: "BHD-Binärbild [y, x]"
+b.shape: hexagon
+b.style.font-size: 50
+
+b1: "Stamm-Binärbild [y, x]"
+b1.shape: hexagon
+b1.style.font-size: 50
+
+b2: "Grauwertbild der Baumkronen [y, x]"
+b2.shape: hexagon
+b2.style.font-size: 50
+
+u: "Unerwünschte Cluster entfernen"
+u.style.font-size: 50
+
+d1: "Kreise in BHD-Binärbild [cy, cx, radius]"
+d1.shape: hexagon
+d1.style.font-size: 50
+
+d2: "Kreise in Stamm-Binärbild [cy, cx, radius]"
+d2.shape: hexagon
+d2.style.font-size: 50
+
+pos: "Baumpositionen [cy, cx]"
+pos.shape: hexagon
+pos.style.font-size: 50
+
+radii: "Stammradien"
+radii.shape: hexagon
+radii.style.font-size: 50
+
+pos2: "Baumpositionen (x, y, z)"
+pos2.shape: hexagon
+pos2.style.font-size: 50
+
+dbh: "Brusthöhendurchmesser"
+dbh.shape: hexagon
+dbh.style.font-size: 50
+
+h: "Baumhöhen"
+h.shape: hexagon
+h.style.font-size: 50
+
+kd: "Baumkronendurchmesser"
+kd.shape: hexagon
+kd.style.font-size: 50
+
+r -> b {
+    style {
+      stroke-width: 4
+    }
+  }
+b1 <- r -> b2 {
+    style {
+      stroke-width: 4
+    }
+  }
+
+b -> u <- b1 {
+    style {
+      stroke-width: 4
+    }
+  }
+u -> Kreise in Bildern detektieren -> d1 {
+    style {
+      stroke-width: 4
+    }
+  }
+Kreise in Bildern detektieren -> d2 {
+    style {
+      stroke-width: 4
+    }
+  }
+d2 -> d1: validiert {
+    style {
+      stroke-width: 4
+      font-size: 50
+    }
+  }
+
+d1 -> pos {
+    style {
+      stroke-width: 4
+    }
+  }
+d1 -> radii {
+    style {
+      stroke-width: 4
+    }
+  }
+
+  Vorwissen -> d1: validiert {
+    style {
+      stroke-dash: 3
+      stroke-width: 4
+      font-size: 50
+    }
+   }
+
+pos -> Transformation -> pos2 {
+    style {
+      stroke-width: 4
+    }
+  }
+
+  dbh <- radii: x2 {
+    style {
+      stroke-width: 4
+      font-size: 50
+    }
+  }
+
+
+pos -> Baumkronen detektieren <- b2 {
+    style {
+      stroke-width: 4
+    }
+  }
+
+h <- Baumkronen detektieren -> kd {
+    style {
+      stroke-width: 4
+    }
+  }
+
+  pos2 -> "Baumobjekte verifizieren" <- dbh {
+    style {
+      stroke-width: 4
+    }
+  }
+  
+  h -> "Baumobjekte verifizieren" <- kd {
+    style {
+      stroke-width: 4
+    }
+  }
+  
+  "Baumobjekte verifizieren" -> "Endgültige Baumparameter" {
+    style {
+      stroke-width: 4
+    }
+  }
+  
+
+"Kreise in Bildern detektieren".style.font-size: 50
+"Baumobjekte verifizieren".style.font-size: 50
+"Endgültige Baumparameter".style.font-size: 50
+"Endgültige Baumparameter".shape: hexagon
+"Transformation".style.font-size: 50
+"Baumkronen detektieren".style.font-size: 50
+Vorwissen.style.font-size: 50
+Vorwissen.shape: page
+Vorwissen.style.multiple: true
+
+
+
+}
+
+
+
+

@@ -1,0 +1,80 @@
+# PNG erstellen: d2 -t 8 Diagrams/Ablaufdiagramm_Methodik.d2 Diagrams/Ablaufdiagramm_Methodik.png
+
+p1: Punktwolke(n) (x, y, z, ...)
+p1.shape: hexagon
+# p1.style.fill: honeydew
+
+p2: "Punktwolkenarray [x, y, z]"
+p2.shape: hexagon
+#p2.style.fill: honeydew
+
+p3: "Punktwolke ohne Boden [x, y, z]"
+p3.shape: hexagon
+#p3.style.fill: honeydew
+
+p4: "Bodenpunktwolke [x, y, z]"
+p4.shape: hexagon
+#p4.style.fill: honeydew
+# 
+p4-2: "Bodenraster mit medialen Z-Werten"
+p4-2.shape: hexagon
+
+p5: "Punktwolke ohne Boden [x, y, z*]"
+p5.shape: hexagon
+#p5.style.fill: honeydew
+
+b: Baumparameter
+b.shape: hexagon
+#b.style.fill: honeydew
+
+b2: Baumkataster in CityGML
+b2.shape: hexagon
+#b2.style.fill: honeydew
+
+Datenaufnahme -> p1 -> "Vorverarbeitung & Programmstart" -> p2 {
+  style {
+    stroke-width: 4
+  }
+}
+p2 -> Boden separieren -> p3 {
+  style {
+    stroke-width: 4
+  }
+}
+Boden separieren -> p4 -> Boden rastern -> p4-2 -> Einheitliches Höhenlevel <- p3 {
+  style {
+    stroke-width: 4
+  }
+}
+p4-2 -> "Baumparameter extrahieren (vgl. Ablaufdiagramm Baumparameter)" {
+  style {
+    stroke-width: 4
+  }
+}
+Einheitliches Höhenlevel -> p5 -> "Baumparameter extrahieren (vgl. Ablaufdiagramm Baumparameter)" -> b {
+  style {
+    stroke-width: 4
+  }
+}
+b -> Konvertierung in CityGML -> b2 {
+  style {
+    stroke-width: 4
+  }
+}
+
+Datenaufnahme.style.font-size: 50
+"Vorverarbeitung & Programmstart".style.font-size: 50
+"Boden separieren".style.font-size: 50
+"Boden rastern".style.font-size: 50
+"Einheitliches Höhenlevel".style.font-size: 50
+"Baumparameter extrahieren (vgl. Ablaufdiagramm Baumparameter)".style.font-size: 50
+"Konvertierung in CityGML".style.font-size: 50
+
+p1.style.font-size: 50
+p2.style.font-size: 50
+p3.style.font-size: 50
+p4.style.font-size: 50
+p4-2.style.font-size: 50
+p5.style.font-size: 50
+b.style.font-size: 50
+b2.style.font-size: 50
